@@ -1,23 +1,32 @@
-
-import openai
+from openai import OpenAI
 import os
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def analyze_big_five(interview_text, player_name="Unknown"):
-    prompt = open("prompt.txt", "r").read()
-    full_prompt = prompt.replace("{{interview}}", interview_text).replace("{{player}}", player_name)
-
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[
-            {"role": "system", "content": "You are a sports psychologist evaluating football players using the Big Five personality model."},
-            {"role": "user", "content": full_prompt}
-        ],
-        temperature=0.7
-    )
-
     try:
-        return eval(response["choices"][0]["message"]["content"])
-    except Exception:
-        return {"error": "Model returned invalid format."}
+        with open("prompt.txt", "r") as f:
+            prompt_template = f.read()
+
+        full_prompt = prompt_template.replace("{{interview}}", interview_text).replace("{{player}}", player_name)
+
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a sports psychologist evaluating football players using the Big Five personality model."
+                },
+                {
+                    "role": "user",
+                    "content": full_prompt
+                }
+            ],
+            temperature=0.7
+        )
+
+        content = response.choices[0].message.content.strip()
+        return eval(content)  # ⚠️ Только если полностью доверяешь результату
+
+    except Exception as e:
+        return {"error": str(e)}
