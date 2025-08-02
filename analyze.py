@@ -11,7 +11,7 @@ def analyze_big_five(interview_text, player_name="Unknown"):
         full_prompt = prompt_template.replace("{{interview}}", interview_text).replace("{{player}}", player_name)
 
         response = client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-3.5-turbo",
             messages=[
                 {
                     "role": "system",
