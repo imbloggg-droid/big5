@@ -1,0 +1,15 @@
+
+Analyze the following interview and return the player's Big Five personality profile in this JSON format:
+
+{
+  "player": "{{player}}",
+  "openness": { "score": float, "comment": "..." },
+  "conscientiousness": { "score": float, "comment": "..." },
+  "extraversion": { "score": float, "comment": "..." },
+  "agreeableness": { "score": float, "comment": "..." },
+  "neuroticism": { "score": float, "comment": "..." },
+  "summary": "..."
+}
+
+Interview:
+"{{interview}}"
