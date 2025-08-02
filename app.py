@@ -16,8 +16,7 @@ if st.button("Evaluate"):
         st.subheader("Big Five Scores")
         for trait, data in result.items():
             if trait not in ["player", "summary"]:
-                st.markdown(f"**{trait.capitalize()}**: {data['score']}  
-*{data['comment']}*")
+                st.markdown(f"**{trait.capitalize()}**: {data['score']}  \n*{data['comment']}*")
         st.subheader("Summary")
         st.write(result["summary"])
         st.subheader("JSON Result")
